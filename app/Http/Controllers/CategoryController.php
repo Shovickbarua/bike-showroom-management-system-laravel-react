@@ -4,16 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Traits\CommonTrait;
 
 class CategoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    use CommonTrait;
+
     public function index()
     {
         $categories = Category::all();
-        return view('categories.cat_list',compact('categories'));
+        return $this->sendResponse(['data' => $categories]);
     }
 
     /**
@@ -23,7 +23,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('categories.add_category');
+        
     }
 
     /**
@@ -44,7 +44,7 @@ class CategoryController extends Controller
         $category->cat_name = $request->cat_name;
         $category->save();
 
-        return redirect(route('category.index'));
+        return $this->sendResponse(['data' => $category]);
     }
 
     /**
@@ -53,9 +53,10 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function show(Category $category)
+    public function show($id)
     {
-        //
+        $category = Category::find($id);
+        return $this->sendResponse(['data' => $category]);
     }
 
     /**
@@ -67,7 +68,7 @@ class CategoryController extends Controller
     public function edit($id)
     {
         $category = Category::find($id);
-        return view('categories.cat_edit',compact('category'));
+        return $this->sendResponse(['data' => $category]);
     }
 
     /**
@@ -77,13 +78,13 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,$id)
+    public function update(Request $request, $id)
     {
         $category = Category::find($id);
         $category->cat_name = $request->cat_name;
         $category->save();
 
-        return redirect(route('category.index'));
+        return $this->sendResponse(['data' => $category]);
     }
 
     /**
@@ -92,9 +93,9 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function destroy($id)
     {
-        Category::destroy($category->id);
-        return redirect(route('category.index'));
+        $category = Category::destroy($id);
+        return $this->sendResponse(['data' => $category]);
     }
 }
