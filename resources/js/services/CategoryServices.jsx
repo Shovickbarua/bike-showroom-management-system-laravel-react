@@ -17,8 +17,8 @@ CategoryServices.index = async () => {
 };
 
 CategoryServices.save = async (data) => {
-    const url = "/api/category/";
-    // if (data.id) urlSave = "/api/qrcodes/" + data.id + "?_method=PUT";
+    let url = "/api/category/";
+    if (data.id) url = "/api/category/" + data.id + "?_method=PUT";
     const res = await axios
         .post(url, data)
         .then((response) => {

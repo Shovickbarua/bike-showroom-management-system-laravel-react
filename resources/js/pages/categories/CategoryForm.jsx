@@ -10,7 +10,9 @@ const CategoryForm = () => {
     });
 
     useEffect(() => {
-        getCategory(id);
+        if (id) {
+            getCategory(id);
+        }
     }, [id]);
 
     const getCategory = async (id) => {
@@ -37,6 +39,7 @@ const CategoryForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        id ? (data.id = id) : "";
         const res = await CategoryServices.save(data);
         if (res.success) {
             navigate("/categories");

@@ -22,14 +22,14 @@ class ProductController extends Controller
         $products= DB::table('products')
                 ->join('categories','products.cat_id','=','categories.id')
                 ->get();
-        return view('products.product_list',compact('products'));
+        return $this->sendResponse(['data' => $products]);
     }
     public function indexsale()
     {
         $products= DB::table('products')
                 ->join('categories','products.cat_id','=','categories.id')
                 ->get();
-        return view('products.product_list',compact('products'));
+                return $this->sendResponse(['data' => $products]);
     }
 
     /**
@@ -39,8 +39,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $categories= Category::all();
-        return view('products.add_product',compact('categories'));
+        
     }
 
     /**
@@ -51,12 +50,12 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate(
-            [
-                'product_name'  => 'required',
-                'image'     => 'required|mimes:jpg,jpeg,png'
-            ],
-        );
+        // $request->validate(
+        //     [
+        //         'product_name'  => 'required',
+        //         'image'     => 'required|mimes:jpg,jpeg,png'
+        //     ],
+        // );
 
         $product = new Product();
         if($request->has('image')){
@@ -74,7 +73,7 @@ class ProductController extends Controller
         $product->dob =$request->dob;
         $product->save();
 
-        return redirect(route('product.index'));
+        return $this->sendResponse(['data' => $product]);
     }
 
     /**
@@ -93,7 +92,7 @@ class ProductController extends Controller
         $type = pathinfo($path, PATHINFO_EXTENSION);
         $data = file_get_contents($path);
         $pic ='data:image/'.$type . ';base64,' .base64_encode($data); 
-        return view('products.show_product',compact('products','pic'));
+        return $this->sendResponse(['data' => $products]);
     }
 
     public function downloadpdf(Request $request){
@@ -101,19 +100,6 @@ class ProductController extends Controller
                 ->join('categories','products.cat_id','=','categories.id')
                 ->where('products.id','LIKE','%'.$request->id.'%')
                 ->first();
-               /* $image = $products->image;
-                $imageData = base64_encode(file_get_contents('app/products/'.$image));
-                $srcs = 'data:image/' . mime_content_type($image). ';base64,' .$imageData;*/
-        /*$path = base_path('logo-social.png');
-        $type = pathinfo($path, PATHINFO_EXTENSION);
-        $data = file_get_contents($path);
-        $pic ='data:image/'.$type . ';base64,' .base64_encode($data); 
-        $pdf = Pdf::setOptions([
-            'isHtml5ParserEnabled' => true,
-            'isRemoteEnabled' => true
-        ])->loadView('products.show_product', compact('products','pic'))->setPaper('a4', 'portrait'); */
-        //$PDFOptions = ['enable_remote' => true, 'chroot' => Storage::url('app/products/'. $products->image)];
-        //$pdf = Pdf::setOptions($PDFOptions)->loadView('products.show_product', compact('products'));
         $pdf = Pdf::loadView('products.show_product', compact('products'));
         return $pdf->download('product.pdf');
     }
@@ -123,11 +109,9 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit()
     {
-        $categories= Category::all();
-        $product = Product::find($id);
-        return view('products.product_edit',compact('product','categories'));
+        
     }
 
     /**
@@ -156,7 +140,7 @@ class ProductController extends Controller
         $product->dob =$request->dob;
         $product->save();
 
-        return redirect(route('category.index'));
+        return $this->sendResponse(['data' => $product]);
     }
 
     /**
@@ -165,9 +149,9 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
+    public function destroy($id)
     {
-        Product::destroy($product->id);
-        return redirect(route('product.index'));
+        $products = Product::destroy($id);
+        return $this->sendResponse(['data' => $products]);
     }
 }

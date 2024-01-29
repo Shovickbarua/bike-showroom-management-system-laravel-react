@@ -12,7 +12,7 @@ class CategoryController extends Controller
 
     public function index()
     {
-        $categories = Category::all();
+        $categories = Category::latest()->get();
         return $this->sendResponse(['data' => $categories]);
     }
 
@@ -65,10 +65,9 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit()
     {
-        $category = Category::find($id);
-        return $this->sendResponse(['data' => $category]);
+        
     }
 
     /**
