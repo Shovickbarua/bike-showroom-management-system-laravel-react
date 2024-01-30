@@ -4,14 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\Category;
+use App\Traits\CommonTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Storage;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
+    use CommonTrait;
     public function index()
     {
         if(Session::has("invoiceId")){
@@ -58,12 +60,26 @@ class ProductController extends Controller
         // );
 
         $product = new Product();
-        if($request->has('image')){
-            // dd($request);
-             $image = $request->file('image');
-             $name = time().uniqid().'.'.$image->extension();
-             $image->move('storage/app/products',$name);
-             $product->image = $name;
+        // if($request->has('image')){
+        //     // dd($request);
+        //     Storage::disk('local')->put('example.txt', 'Contents');
+        //      $image = $request->file('image');
+        //      $name = time().uniqid().'.'.$image->extension();
+        //      $image->move('storage/app/products',$name);
+        //      $product->image = $name;
+        //  }
+         if($request->has('image')){
+            dd($request->file('image'));
+            $image = $request->file('image');
+            
+            $name = time().uniqid().'.'.$image->extension();
+            // dd($name);
+            // Store the image in the storage/app/public directory
+            $path = $image->storeAs('public', $name);
+
+            // Create a public URL using the storage link
+            $imageUrl = Storage::url($path);
+            $product->image = $imageUrl;
          }
         $product->product_name = $request->product_name;
         $product->SKU = $request->SKU;

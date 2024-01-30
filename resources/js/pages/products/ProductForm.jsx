@@ -14,7 +14,7 @@ const ProductForm = () => {
         cat_id: "",
         dob: "",
         cost: "",
-        // image: "",
+        image: "",
     });
 
     useEffect(() => {
@@ -43,10 +43,17 @@ const ProductForm = () => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
+        // if (name == "image") {
+        //     const file = e.target.files[0];
+        //     setState({
+        //         image: file,
+        //     });
+        // } else {
         setState((prevData) => ({
             ...prevData,
             [name]: value,
         }));
+        // }
     };
 
     const handleSubmit = async (e) => {
@@ -58,13 +65,6 @@ const ProductForm = () => {
             navigate("/product");
         }
     };
-
-    // let accountDropdown = [<option value="">{t("Please Select")}</option>];
-    // if (state.accounts) {
-    //     state.accounts.map(account => (
-    //         accountDropdown.push(<option key={account.id} value={account.id}>{account.name}</option>)
-    //     ));
-    // }
 
     return (
         <form id="myForm" onSubmit={handleSubmit}>
@@ -162,6 +162,7 @@ const ProductForm = () => {
                         className="form-control"
                         id="image"
                         name="image"
+                        onChange={handleChange}
                     />
                 </div>
                 <div className="form-group col-md-12">
