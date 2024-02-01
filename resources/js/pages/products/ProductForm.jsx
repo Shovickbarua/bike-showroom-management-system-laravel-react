@@ -43,24 +43,28 @@ const ProductForm = () => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        // if (name == "image") {
-        //     const file = e.target.files[0];
-        //     setState({
-        //         image: file,
-        //     });
-        // } else {
-        setState((prevData) => ({
-            ...prevData,
-            [name]: value,
-        }));
-        // }
+        if (name == "image") {
+            const file = e.target.files[0];
+            setState({
+                ...state,
+                image: file,
+            });
+        } else {
+            setState({
+                ...state,
+                [name]: value,
+            });
+        }
     };
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         id ? (state.id = id) : "";
-        console.log("res", state);
-        const res = await ProductServices.save(state);
+        // console.log("res", state);
+        let formdata = new FormData();
+        Object.keys(state).map((key) => {
+            formdata.append(key, state[key]);
+        });
+        const res = await ProductServices.save(formdata);
         if (res.success) {
             navigate("/product");
         }
@@ -70,7 +74,7 @@ const ProductForm = () => {
         <form id="myForm" onSubmit={handleSubmit}>
             <div className="form-row">
                 <div className="form-group col-md-4">
-                    <label for="name">
+                    <label htmlFor="name">
                         Product<font>*</font>
                     </label>
                     <input
@@ -84,7 +88,7 @@ const ProductForm = () => {
                     />
                 </div>
                 <div className="form-group col-md-4">
-                    <label for="group_id">Select Category</label>
+                    <label htmlFor="group_id">Select Category</label>
                     <select
                         className="form-control"
                         id="cat_id"
@@ -100,7 +104,7 @@ const ProductForm = () => {
                     </select>
                 </div>
                 <div className="form-group col-md-4">
-                    <label for="name">
+                    <label htmlFor="name">
                         SKU<font>*</font>
                     </label>
                     <input
@@ -114,7 +118,7 @@ const ProductForm = () => {
                     />
                 </div>
                 <div className="form-group col-md-4">
-                    <label for="dob">
+                    <label htmlFor="dob">
                         Date<font>*</font>
                     </label>
                     <input
@@ -123,12 +127,12 @@ const ProductForm = () => {
                         id="dob"
                         name="dob"
                         value={state.dob}
-                        autocomplete="on"
+                        autoComplete="on"
                         onChange={handleChange}
                     />
                 </div>
                 <div className="form-group col-md-4">
-                    <label for="name">
+                    <label htmlFor="name">
                         Quantity<font>*</font>
                     </label>
                     <input
@@ -142,7 +146,7 @@ const ProductForm = () => {
                     />
                 </div>
                 <div className="form-group col-md-4">
-                    <label for="name">
+                    <label htmlFor="name">
                         Cost Price<font>*</font>
                     </label>
                     <input
@@ -156,7 +160,7 @@ const ProductForm = () => {
                     />
                 </div>
                 <div className="form-group col-md-4">
-                    <label for="image">Image Upload</label>
+                    <label htmlFor="image">Image Upload</label>
                     <input
                         type="file"
                         className="form-control"
