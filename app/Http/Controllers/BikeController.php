@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Bike;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class BikeController extends Controller
 {
     public function index()
     {
-        $bikes=Bike::all();
-        return view('bikes.bike_list',compact('bikes'));
+        $bikes = Bike::all();
+        return $this->sendResponse(['data' => $bikes]);
     }
 
     /**
@@ -20,7 +21,7 @@ class BikeController extends Controller
      */
     public function create()
     {
-        return view('bikes.add_bike');
+
     }
 
     /**
@@ -32,30 +33,34 @@ class BikeController extends Controller
     public function store(Request $request)
     {
         $bike = new Bike();
-        if($request->has('image')){
-            // dd($request);
-             $image = $request->file('image');
-             $name = time().uniqid().'.'.$image->extension();
-             $image->move('storage/app/products',$name);
-             $bike->image = $name;
-         }
+        if ($request->has('image')) {
+            $image = $request->file('image');
+
+            $name = time() . uniqid() . '.' . $image->extension();
+            // Store the image in the storage/app/public directory
+            $path = $image->storeAs('public', $name);
+
+            // Create a public URL using the storage link
+            $imageUrl = Storage::url($path);
+            $bike->image = $imageUrl;
+        }
         $bike->bike_name = $request->bike_name;
         $bike->brand = $request->brand;
         $bike->bquantity = $request->bquantity;
         $bike->bcost = $request->bcost;
-        $bike->engine_no =$request->engine_no;
-        $bike->dob =$request->dob;
-        $bike->chas_no =$request->chas_no;
-        $bike->m_veh =$request->m_veh;
-        $bike->manu =$request->manu;
-        $bike->cc =$request->cc;
-        $bike->seat_cap =$request->seat_cap;
-        $bike->brake =$request->brake;
-        $bike->tyre =$request->tyre;
-        $bike->weight =$request->weight;
+        $bike->engine_no = $request->engine_no;
+        $bike->dob = $request->dob;
+        $bike->chas_no = $request->chas_no;
+        $bike->m_veh = $request->m_veh;
+        $bike->manu = $request->manu;
+        $bike->cc = $request->cc;
+        $bike->seat_cap = $request->seat_cap;
+        $bike->brake = $request->brake;
+        $bike->tyre = $request->tyre;
+        $bike->weight = $request->weight;
         $bike->save();
 
-        return redirect(route('bike.index'));
+        return $this->sendResponse(['data' => $bike]);
     }
 
     /**
@@ -64,9 +69,11 @@ class BikeController extends Controller
      * @param  \App\Models\Bike  $bike
      * @return \Illuminate\Http\Response
      */
-    public function show(Bike $bike)
+    public function show(Bike $bike, $id)
     {
-        //
+        $bike = Bike::find($id);
+
+        return $this->sendResponse(['data' => $bike]);
     }
 
     /**
@@ -75,11 +82,9 @@ class BikeController extends Controller
      * @param  \App\Models\Bike  $bike
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request,$id)
+    public function edit(Request $request, )
     {
-        $bike = Bike::find($id);
-        
-        return view('bikes.bike_edit',compact('bike'));
+
     }
 
     /**
@@ -92,29 +97,33 @@ class BikeController extends Controller
     public function update(Request $request, $id)
     {
         $bike = Bike::find($id);
-        if($request->has('image')){
-            // dd($request);
-             $image = $request->file('image');
-             $name = time().uniqid().'.'.$image->extension();
-             $image->move('storage/app/products',$name);
-             $bike->image = $name;
-         }
-         $bike->bike_name = $request->bike_name;
-         $bike->brand = $request->brand;
-         $bike->bquantity = $request->bquantity;
-         $bike->bcost = $request->bcost;
-         $bike->engine_no =$request->engine_no;
-         $bike->dob =$request->dob;
-         $bike->chas_no =$request->chas_no;
-         $bike->m_veh =$request->m_veh;
-         $bike->manu =$request->manu;
-         $bike->cc =$request->cc;
-         $bike->seat_cap =$request->seat_cap;
-         $bike->brake =$request->brake;
-         $bike->tyre =$request->tyre;
-         $bike->weight =$request->weight;
+        if ($request->has('image')) {
+            $image = $request->file('image');
+
+            $name = time() . uniqid() . '.' . $image->extension();
+            // Store the image in the storage/app/public directory
+            $path = $image->storeAs('public', $name);
+
+            // Create a public URL using the storage link
+            $imageUrl = Storage::url($path);
+            $bike->image = $imageUrl;
+        }
+        $bike->bike_name = $request->bike_name;
+        $bike->brand = $request->brand;
+        $bike->bquantity = $request->bquantity;
+        $bike->bcost = $request->bcost;
+        $bike->engine_no = $request->engine_no;
+        $bike->dob = $request->dob;
+        $bike->chas_no = $request->chas_no;
+        $bike->m_veh = $request->m_veh;
+        $bike->manu = $request->manu;
+        $bike->cc = $request->cc;
+        $bike->seat_cap = $request->seat_cap;
+        $bike->brake = $request->brake;
+        $bike->tyre = $request->tyre;
+        $bike->weight = $request->weight;
         $bike->save();
-        return redirect(route('bike.index'));
+        return $this->sendResponse(['data' => $bike]);
     }
 
     /**
@@ -125,7 +134,7 @@ class BikeController extends Controller
      */
     public function destroy(Bike $bike)
     {
-        Bike::destroy($bike->id);
-        return redirect(route('bike.index'));
+        $bike = Bike::destroy($bike->id);
+        return $this->sendResponse(['data' => $bike]);
     }
 }

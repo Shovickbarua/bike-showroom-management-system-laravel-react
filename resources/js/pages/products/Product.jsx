@@ -15,6 +15,14 @@ const Product = () => {
             setProduct(res.data.data);
         }
     };
+
+    const deleteProduct = async (id) => {
+        const res = await ProductServices.delete(id);
+        console.log("data", res);
+        if (res.success) {
+            getProduct();
+        }
+    };
     return (
         <div className="row">
             <div className="col-lg-12">
@@ -56,21 +64,41 @@ const Product = () => {
                                         <td>{product.SKU}</td>
                                         <td>{product.quantity}</td>
                                         <td>{product.dob}</td>
-                                        <td><img src={product.image}/></td> 
-									{/* @if(session('name')  == 'superadmin') 
-									<td>
-									<div className="d-flex">
-										<a href="{{route('product.edit', $product->id)}}" className="btn shadow btn-xs sharp me-1"><i className="fas fa-pencil-alt"></i></a>
+                                        <td>
+                                            <img src={product.image} />
+                                        </td>
+                                        <td>
+                                            <div className="d-flex">
+                                                <Link
+                                                    to={
+                                                        "/product/edit/" +
+                                                        product.id
+                                                    }
+                                                    className="btn shadow btn-xs sharp me-1"
+                                                >
+                                                    <i className="fas fa-pencil-alt"></i>
+                                                </Link>
+                                                <a
+                                                    onClick={() =>
+                                                        deleteProduct(
+                                                            product.id
+                                                        )
+                                                    }
+                                                    className="btn btn-danger shadow btn-xs sharp"
+                                                >
+                                                    <i className="fa fa-trash"></i>
+                                                </a>
+                                            </div>
+                                        </td>
 
-										<form action="{{route('product.destroy',$product->id)}}" method="POST">
-										@method('DELETE')    
-										@csrf
-										<button type="submit" className="btn btn-danger shadow btn-xs sharp"><i className="fa fa-trash"></i></button>
-										</form>
-									</div>
-									</td>
-									@endif
-									<td><a href="{{route('add_sale', $product->product_name)}}" className="btn btn-primary btn-md">Add Sale</a></td> */}
+                                        <td>
+                                            <a
+                                                href="{{route('add_sale', $product->product_name)}}"
+                                                className="btn btn-primary btn-md"
+                                            >
+                                                Add Sale
+                                            </a>
+                                        </td>
                                     </tr>
                                 ))}
                             </tbody>

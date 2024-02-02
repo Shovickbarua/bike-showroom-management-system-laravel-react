@@ -167,6 +167,7 @@ const ProductForm = () => {
                         id="image"
                         name="image"
                         onChange={handleChange}
+                        value={state.image}
                     />
                 </div>
                 <div className="form-group col-md-12">

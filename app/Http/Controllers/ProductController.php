@@ -91,14 +91,15 @@ class ProductController extends Controller
      */
     public function show(Request $request, $id)
     {
-        $products = DB::table('products')
-            ->join('categories', 'products.cat_id', '=', 'categories.id')
-            ->where('products.id', 'LIKE', '%' . $request->id . '%')
-            ->first();
-        $path = base_path('logo-social.png');
-        $type = pathinfo($path, PATHINFO_EXTENSION);
-        $data = file_get_contents($path);
-        $pic = 'data:image/' . $type . ';base64,' . base64_encode($data);
+        // $products = DB::table('products')
+        //     ->join('categories', 'products.cat_id', '=', 'categories.id')
+        //     ->where('products.id', 'LIKE', '%' . $request->id . '%')
+        //     ->first();
+        // $path = base_path('logo-social.png');
+        // $type = pathinfo($path, PATHINFO_EXTENSION);
+        // $data = file_get_contents($path);
+        // $pic = 'data:image/' . $type . ';base64,' . base64_encode($data);
+        $products = Product::find($id);
         return $this->sendResponse(['data' => $products]);
     }
 
@@ -133,11 +134,15 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
         if ($request->has('image')) {
-            // dd($request);
             $image = $request->file('image');
+
             $name = time() . uniqid() . '.' . $image->extension();
-            $image->move('storage/app/products', $name);
-            $product->image = $name;
+            // Store the image in the storage/app/public directory
+            $path = $image->storeAs('public', $name);
+
+            // Create a public URL using the storage link
+            $imageUrl = Storage::url($path);
+            $product->image = $imageUrl;
         }
         $product->product_name = $request->product_name;
         $product->SKU = $request->SKU;

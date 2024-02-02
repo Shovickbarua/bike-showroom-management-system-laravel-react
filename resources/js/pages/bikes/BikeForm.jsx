@@ -1,8 +1,71 @@
-import React from "react";
-
+import React, { useEffect, useState } from "react";
+import BikeServices from "../../services/BikeServices";
+import { useParams } from "react-router-dom";
 const BikeForm = () => {
+    const { id } = useParams();
+    const [state, setState] = useState({
+        brand: "",
+        bike_name: "",
+        dob: "",
+        bquantity: "",
+        bcost: "",
+        color: "",
+        engine_no: "",
+        chas_no: "",
+        m_veh: "",
+        manu: "",
+        cc: "",
+        seat_cap: "",
+        brake: "",
+        ftyre: "",
+        rtyre: "",
+        weight: "",
+        image: "",
+    });
+
+    useEffect(() => {
+        if (id) {
+            getBike();
+        }
+    }, [id]);
+
+    const getBike = async (id) => {
+        const res = await BikeServices.show(id);
+        if (res.success) {
+            setState(res.data.data);
+        }
+    };
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        if (name === "image") {
+            const file = e.target.files[0];
+            setState({
+                ...state,
+                image: file,
+            });
+        } else {
+            setState({
+                ...state,
+                [name]: value,
+            });
+        }
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        id ? (state.id = id) : "";
+        let formdata = new FormData();
+        Object.keys(state).map((key) => {
+            formdata.append(key, state[key]);
+        });
+        const res = await BikeServices.save(formdata);
+        if (res.success) {
+            navigate("/bike");
+        }
+    };
     return (
-        <form id="myForm" method="POST" action="" enctype="multipart/form-data">
+        <form id="myForm" onSubmit={handleSubmit} enctype="multipart/form-data">
             <div className="form-row">
                 <div className="form-group col-md-4">
                     <label for="name">
@@ -14,7 +77,8 @@ const BikeForm = () => {
                         id=""
                         placeholder="Name"
                         name="brand"
-                        value=""
+                        value={state.brand}
+                        onChange={handleChange}
                     />
                 </div>
                 <div className="form-group col-md-4">
@@ -27,7 +91,8 @@ const BikeForm = () => {
                         id=""
                         placeholder=""
                         name="bike_name"
-                        value=""
+                        value={state.brand}
+                        onChange={handleChange}
                     />
                 </div>
                 <div className="form-group col-md-4">
@@ -39,6 +104,8 @@ const BikeForm = () => {
                         className="form-control singledatepicker"
                         id="dob"
                         name="dob"
+                        value={state.dob}
+                        onChange={handleChange}
                     />
                 </div>
                 <div className="form-group col-md-4">
@@ -51,7 +118,8 @@ const BikeForm = () => {
                         id=""
                         placeholder=""
                         name="bquantity"
-                        value=""
+                        value={state.bquantity}
+                        onChange={handleChange}
                     />
                 </div>
                 <div className="form-group col-md-4">
@@ -64,7 +132,8 @@ const BikeForm = () => {
                         id=""
                         placeholder=""
                         name="bcost"
-                        value=""
+                        value={state.bcost}
+                        onChange={handleChange}
                     />
                 </div>
                 <div className="form-group col-md-4">
@@ -77,7 +146,8 @@ const BikeForm = () => {
                         id=""
                         placeholder=""
                         name="color"
-                        value=""
+                        value={state.color}
+                        onChange={handleChange}
                     />
                 </div>
                 <div className="form-group col-md-4">
@@ -90,7 +160,8 @@ const BikeForm = () => {
                         id=""
                         placeholder=""
                         name="engine_no"
-                        value=""
+                        value={state.engine_no}
+                        onChange={handleChange}
                     />
                 </div>
                 <div className="form-group col-md-4">
@@ -103,7 +174,8 @@ const BikeForm = () => {
                         id=""
                         placeholder=""
                         name="chas_no"
-                        value=""
+                        value={state.chas_no}
+                        onChange={handleChange}
                     />
                 </div>
                 <div className="form-group col-md-4">
@@ -116,7 +188,8 @@ const BikeForm = () => {
                         id=""
                         placeholder=""
                         name="m_veh"
-                        value=""
+                        value={state.m_veh}
+                        onChange={handleChange}
                     />
                 </div>
                 <div className="form-group col-md-4">
@@ -130,7 +203,8 @@ const BikeForm = () => {
                         id=""
                         placeholder=""
                         name="manu"
-                        value=""
+                        value={state.manu}
+                        onChange={handleChange}
                     />
                 </div>
                 <div className="form-group col-md-4">
@@ -144,7 +218,8 @@ const BikeForm = () => {
                         id=""
                         placeholder=""
                         name="cc"
-                        value=""
+                        value={state.cc}
+                        onChange={handleChange}
                     />
                 </div>
                 <div className="form-group col-md-4">
@@ -157,7 +232,8 @@ const BikeForm = () => {
                         id=""
                         placeholder=""
                         name="seat_cap"
-                        value=""
+                        value={state.seat_cap}
+                        onChange={handleChange}
                     />
                 </div>
                 <div className="form-group col-md-4">
@@ -170,7 +246,8 @@ const BikeForm = () => {
                         id=""
                         placeholder=""
                         name="brake"
-                        value=""
+                        value={state.brake}
+                        onChange={handleChange}
                     />
                 </div>
                 <div className="form-group col-md-4">
@@ -183,7 +260,8 @@ const BikeForm = () => {
                         id=""
                         placeholder=""
                         name="ftyre"
-                        value=""
+                        value={state.ftyre}
+                        onChange={handleChange}
                     />
                 </div>
                 <div className="form-group col-md-4">
@@ -196,7 +274,8 @@ const BikeForm = () => {
                         id=""
                         placeholder=""
                         name="rtyre"
-                        value=""
+                        value={state.rtyre}
+                        onChange={handleChange}
                     />
                 </div>
                 <div className="form-group col-md-4">
@@ -209,7 +288,8 @@ const BikeForm = () => {
                         id=""
                         placeholder=""
                         name="weight"
-                        value=""
+                        value={state.weight}
+                        onChange={handleChange}
                     />
                 </div>
                 <div className="form-group col-md-4">
