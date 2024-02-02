@@ -22,6 +22,8 @@ class ProductController extends Controller
 
         }
         $products = Product::with('category')->get();
+        // $products = Product::all();
+        // dd($products);
         return $this->sendResponse(['data' => $products]);
     }
     public function indexsale()

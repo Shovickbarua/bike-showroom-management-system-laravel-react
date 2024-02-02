@@ -12,7 +12,7 @@ const Product = () => {
         const res = await ProductServices.index();
         console.log("data", res);
         if (res.success) {
-            setProduct(res.data);
+            setProduct(res.data.data);
         }
     };
     return (
@@ -52,12 +52,12 @@ const Product = () => {
                                     <tr key={index}>
                                         <td>{index + 1}</td>
                                         <td>{product.product_name}</td>
-                                        <td>{product.cat_name}</td>
+                                        <td>{product.category.cat_name}</td>
                                         <td>{product.SKU}</td>
                                         <td>{product.quantity}</td>
                                         <td>{product.dob}</td>
-                                        {/* <td><img src="{{asset'/products/'.$product->image)}}" style="height:150px; width:150px;"/></td>
-									@if(session('name')  == 'superadmin')
+                                        <td><img src={product.image}/></td> 
+									{/* @if(session('name')  == 'superadmin') 
 									<td>
 									<div className="d-flex">
 										<a href="{{route('product.edit', $product->id)}}" className="btn shadow btn-xs sharp me-1"><i className="fas fa-pencil-alt"></i></a>
