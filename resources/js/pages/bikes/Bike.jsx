@@ -8,14 +8,15 @@ const Bike = () => {
     useEffect(() => {
         getBike();
     }, []);
+
     const getBike = async () => {
         const res = await BikeServices.index();
-        console.log("data", res);
+        console.log("data", res.data.data);
         if (res.success) {
             setBike(res.data.data);
         }
     };
-
+    console.log("res", bike);
     const deleteBike = async (id) => {
         const res = await BikeServices.delete(id);
         if (res.success) {
@@ -56,7 +57,7 @@ const Bike = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {bike.map((bike, index) => {
+                                {bike.map((bike, index) => (
                                     <tr key={index}>
                                         <td>{index + 1}</td>
                                         <td>{bike.brand}</td>
@@ -66,7 +67,10 @@ const Bike = () => {
                                         <td>{bike.bquantity}</td>
                                         <td>{bike.dob}</td>
                                         <td>
-                                            <img src={bike.image} />
+                                            <img
+                                                src={bike.image}
+                                                // alt={`Bike ${index + 1}`}
+                                            />
                                         </td>
                                         <td>
                                             <div className="d-flex">
@@ -88,12 +92,15 @@ const Bike = () => {
                                             </div>
                                         </td>
                                         <td>
-                                            <a className="btn btn-primary btn-md">
+                                            <Link
+                                                to={'/bike-sale/add/' + bike.id}
+                                                className="btn btn-primary btn-md"
+                                            >
                                                 Add order
-                                            </a>
+                                            </Link>
                                         </td>
-                                    </tr>;
-                                })}
+                                    </tr>
+                                ))}
                             </tbody>
                         </table>
                     </div>

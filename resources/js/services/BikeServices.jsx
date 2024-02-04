@@ -1,7 +1,7 @@
 const BikeServices = () => {};
 
 BikeServices.index = async () => {
-    const url = "/api/category/";
+    const url = "/api/bike/";
     const res = await axios
         .get(url)
         .then((response) => {
@@ -14,8 +14,8 @@ BikeServices.index = async () => {
 };
 
 BikeServices.save = async (data) => {
-    let url = "/api/category/";
-    if (data.id) url = "/api/category/" + data.id + "?_method=PUT";
+    let url = "/api/bike/";
+    if (data.id) url = "/api/bike/" + data.id + "?_method=PUT";
     const res = await axios
         .post(url, data)
         .then((response) => {
@@ -28,7 +28,7 @@ BikeServices.save = async (data) => {
 };
 
 BikeServices.show = async (id) => {
-    const url = "/api/category/" + id;
+    const url = "/api/bike/" + id;
     const res = await axios
         .get(url)
         .then((response) => {
@@ -41,7 +41,7 @@ BikeServices.show = async (id) => {
 };
 
 BikeServices.delete = async (id) => {
-    const url = "/api/category/" + id;
+    const url = "/api/bike/" + id;
     const res = await axios
         .delete(url)
         .then((response) => {

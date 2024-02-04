@@ -51,9 +51,9 @@ Route::get('/products',[ProductController::class,'indexsale'])->name('indexsale'
 
 /*Bike*/
 Route::resource('/bike',BikeController::class);
-
+Route::get('/method',[BikesaleController::class,'method']);
 /*Bike Sale*/
-Route::resource('/bike_sale',BikesaleController::class);
+Route::resource('/bike-sale',BikesaleController::class);
 Route::get('/bike_sales',[BikesaleController::class,'bikeinvoice'])->name('bikeinvoice');
 
 /*Product Sale */

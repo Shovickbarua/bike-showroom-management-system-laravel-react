@@ -1,7 +1,9 @@
-const IncomeServices = () => {};
+import React from 'react'
 
-IncomeServices.index = async () => {
-    const url = "/api/expense/";
+const BikeSaleServices = () => {}
+
+BikeSaleServices.index = async () => {
+    const url = "/api/bike-sale/";
     const res = await axios
         .get(url)
         .then((response) => {
@@ -13,9 +15,9 @@ IncomeServices.index = async () => {
     return res;
 };
 
-IncomeServices.save = async (data) => {
-    let url = "/api/expense/";
-    if (data.id) url = "/api/expense/" + data.id + "?_method=PUT";
+BikeSaleServices.save = async (data) => {
+    let url = "/api/bike-sale/";
+    // if (data.id) url = "/api/bike-sale/" + data.id + "?_method=PUT";
     const res = await axios
         .post(url, data)
         .then((response) => {
@@ -27,8 +29,8 @@ IncomeServices.save = async (data) => {
     return res;
 };
 
-IncomeServices.show = async (id) => {
-    const url = "/api/expense/" + id;
+BikeSaleServices.show = async (id) => {
+    const url = "/api/bike-sale/" + id;
     const res = await axios
         .get(url)
         .then((response) => {
@@ -40,8 +42,8 @@ IncomeServices.show = async (id) => {
     return res;
 };
 
-IncomeServices.delete = async (id) => {
-    const url = "/api/expense/" + id;
+BikeSaleServices.delete = async (id) => {
+    const url = "/api/bike-sale/" + id;
     const res = await axios
         .delete(url)
         .then((response) => {
@@ -54,4 +56,5 @@ IncomeServices.delete = async (id) => {
     return res;
 };
 
-export default IncomeServices;
+
+export default BikeSaleServices

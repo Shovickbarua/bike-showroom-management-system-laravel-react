@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bike;
+use App\Traits\CommonTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class BikeController extends Controller
 {
+    use CommonTrait;
     public function index()
     {
         $bikes = Bike::all();
@@ -33,6 +35,7 @@ class BikeController extends Controller
     public function store(Request $request)
     {
         $bike = new Bike();
+        // dd($request);
         if ($request->has('image')) {
             $image = $request->file('image');
 
@@ -48,6 +51,7 @@ class BikeController extends Controller
         $bike->brand = $request->brand;
         $bike->bquantity = $request->bquantity;
         $bike->bcost = $request->bcost;
+        $bike->color = $request->color;
         $bike->engine_no = $request->engine_no;
         $bike->dob = $request->dob;
         $bike->chas_no = $request->chas_no;
@@ -56,7 +60,8 @@ class BikeController extends Controller
         $bike->cc = $request->cc;
         $bike->seat_cap = $request->seat_cap;
         $bike->brake = $request->brake;
-        $bike->tyre = $request->tyre;
+        $bike->ftyre = $request->ftyre;
+        $bike->rtyre = $request->rtyre;
         $bike->weight = $request->weight;
         $bike->save();
 
@@ -69,7 +74,7 @@ class BikeController extends Controller
      * @param  \App\Models\Bike  $bike
      * @return \Illuminate\Http\Response
      */
-    public function show(Bike $bike, $id)
+    public function show($id)
     {
         $bike = Bike::find($id);
 

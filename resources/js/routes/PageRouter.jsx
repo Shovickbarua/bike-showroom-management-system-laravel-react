@@ -13,6 +13,10 @@ import BikeForm from '../pages/bikes/BikeForm';
 import Root from "./Root";
 import Category from "../pages/categories/Category";
 import CategoryForm from "../pages/categories/CategoryForm";
+import AddOrder from "../pages/bikes/AddOrder";
+import AddOldOrder from "../pages/bikes/AddOldOrder";
+import BikeSaleList from "../pages/bikes/BikeSaleList";
+import BikeStockList from "../pages/bikes/BikeStockList";
 
 
 const router = createBrowserRouter([
@@ -44,6 +48,11 @@ const router = createBrowserRouter([
         { path: "/bike", element: <Bike/>, },
         { path: "/bike/add", element: <BikeForm/>, },
         { path: "/bike/edit/:id", element: <BikeForm/>, },
+        
+        { path: "/bike-sale/add/:id", element: <AddOrder/>, },
+        { path: "/bike-sale/old", element: <AddOldOrder/>, },
+        { path: "/bike-sale", element: <BikeSaleList/>, },
+        { path: "/bike/stock", element: <BikeStockList/>, },
 
         { path: "/categories", element: <Category/>, },
         { path: "/categories/add", element: <CategoryForm/>, },

@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import BikeServices from "../../services/BikeServices";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 const BikeForm = () => {
     const { id } = useParams();
+    const navigate = useNavigate();
     const [state, setState] = useState({
         brand: "",
         bike_name: "",
@@ -54,7 +55,7 @@ const BikeForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        id ? (state.id = id) : "";
+        id ? (state.bike_id = id) : "";
         let formdata = new FormData();
         Object.keys(state).map((key) => {
             formdata.append(key, state[key]);
@@ -91,7 +92,7 @@ const BikeForm = () => {
                         id=""
                         placeholder=""
                         name="bike_name"
-                        value={state.brand}
+                        value={state.bike_name}
                         onChange={handleChange}
                     />
                 </div>
@@ -299,6 +300,7 @@ const BikeForm = () => {
                         className="form-control"
                         id="image"
                         name="image"
+                        onChange={handleChange}
                     />
                 </div>
                 <div className="form-group col-md-12">

@@ -3,16 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Expense;
+use App\Traits\CommonTrait;
 use Illuminate\Http\Request;
 
 class ExpenseController extends Controller
 {
+    use CommonTrait;
     public function index()
     {
         $expenses = Expense::all();
         $ex =Expense::sum('amount');
 
-        return view('expenses.expense_list',compact('expenses','ex'));
+        return $this->sendResponse(['data' => $expenses,$ex]);
     }
 
     /**
@@ -22,7 +24,7 @@ class ExpenseController extends Controller
      */
     public function create()
     {
-        return view('expenses.add_expense');
+    
     }
 
     /**
@@ -45,7 +47,7 @@ class ExpenseController extends Controller
         $expense->amount = $request->amount;
         $expense->save();
 
-        return redirect(route('expense.index'));
+        return $this->sendResponse(['data' => $expense]);
     }
 
     /**
@@ -54,9 +56,10 @@ class ExpenseController extends Controller
      * @param  \App\Models\Expense  $expense
      * @return \Illuminate\Http\Response
      */
-    public function show(Expense $expense)
+    public function show(Expense $expense, $id)
     {
-        //
+        $expense = Expense::find($id);
+        return $this->sendResponse(['data' => $expense]);
     }
 
     /**
@@ -88,9 +91,9 @@ class ExpenseController extends Controller
      * @param  \App\Models\Expense  $expense
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Expense $expense)
+    public function destroy(Expense $expense,$id)
     {
-        Expense::destroy($expense->id);
-        return redirect(route('expense.index'));
+        $expense = Expense::destroy($id);
+        return $this->sendResponse(['data' => $expense]);
     }
 }

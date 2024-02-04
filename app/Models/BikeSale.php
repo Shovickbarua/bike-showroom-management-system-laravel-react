@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class BikeSale extends Model
 {
     use HasFactory;
+
+    public function method(){
+        return $this->belongsTo(Method::class,'method_id');
+    }
 }

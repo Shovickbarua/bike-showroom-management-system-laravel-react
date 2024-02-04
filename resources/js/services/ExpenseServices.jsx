@@ -1,7 +1,7 @@
 const ExpenseServices = () => {};
 
 ExpenseServices.index = async () => {
-    const url = "/api/category/";
+    const url = "/api/expense/";
     const res = await axios
         .get(url)
         .then((response) => {
@@ -14,8 +14,8 @@ ExpenseServices.index = async () => {
 };
 
 ExpenseServices.save = async (data) => {
-    let url = "/api/category/";
-    if (data.id) url = "/api/category/" + data.id + "?_method=PUT";
+    let url = "/api/expense/";
+    if (data.id) url = "/api/expense/" + data.id + "?_method=PUT";
     const res = await axios
         .post(url, data)
         .then((response) => {
@@ -28,7 +28,7 @@ ExpenseServices.save = async (data) => {
 };
 
 ExpenseServices.show = async (id) => {
-    const url = "/api/category/" + id;
+    const url = "/api/expense/" + id;
     const res = await axios
         .get(url)
         .then((response) => {
@@ -41,7 +41,7 @@ ExpenseServices.show = async (id) => {
 };
 
 ExpenseServices.delete = async (id) => {
-    const url = "/api/category/" + id;
+    const url = "/api/expense/" + id;
     const res = await axios
         .delete(url)
         .then((response) => {

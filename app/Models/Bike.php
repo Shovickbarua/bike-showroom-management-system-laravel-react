@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Bike extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['bquantity'];
 }
