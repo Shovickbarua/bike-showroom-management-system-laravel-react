@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import MethodServices from "../../services/MethodServices";
 
 const AddOldOrder = () => {
     const navigate = useNavigate();
     const { id } = useParams();
-    const [method, setMethod] = useState("");
+    const [method, setMethod] = useState([]);
     const [state, setState] = useState({
         client_name: "",
         fName: "",
@@ -53,6 +54,7 @@ const AddOldOrder = () => {
 
     const getMethod = async () => {
         const res = await MethodServices.index();
+        // console.log('data', res)
         if (res.success) {
             setMethod(res.data.data);
         }
@@ -93,23 +95,25 @@ const AddOldOrder = () => {
     };
     const handleSubmit = async (e) => {
         e.preventDefault();
-        id ? (state.id = id) : "";
-
-        const res = await BikeSaleServices.save(state);
+        let formdata = new FormData();
+        Object.keys(state).map((key) => {
+            formdata.append(key, state[key]);
+        });
+        const res = await BikeSaleServices.save(formdata);
         if (res.success) {
             navigate("/bike-sale");
         }
     };
     return (
         <form id="myForm" method="POST" onSubmit={handleSubmit}>
-            <div class="form-row">
-                <div class="form-group col-md-4">
-                    <label for="name">
-                        Client Name<font style="color:red">*</font>
+            <div className="form-row">
+                <div className="form-group col-md-4">
+                    <label htmlFor="name">
+                        Client Name<font >*</font>
                     </label>
                     <input
                         type="text"
-                        class="form-control"
+                        className="form-control"
                         id=""
                         value={state.client_name}
                         placeholder=""
@@ -117,13 +121,13 @@ const AddOldOrder = () => {
                         onChange={handleChange}
                     />
                 </div>
-                <div class="form-group col-md-4">
-                    <label for="name">
-                        Father's Name<font style="color:red">*</font>
+                <div className="form-group col-md-4">
+                    <label htmlFor="name">
+                        Father's Name<font >*</font>
                     </label>
                     <input
                         type="text"
-                        class="form-control"
+                        className="form-control"
                         id=""
                         value={state.fName}
                         placeholder=""
@@ -131,13 +135,13 @@ const AddOldOrder = () => {
                         onChange={handleChange}
                     />
                 </div>
-                <div class="form-group col-md-4">
-                    <label for="name">
-                        NID No<font style="color:red">*</font>
+                <div className="form-group col-md-4">
+                    <label htmlFor="name">
+                        NID No<font >*</font>
                     </label>
                     <input
                         type="text"
-                        class="form-control"
+                        className="form-control"
                         id=""
                         value={state.nid}
                         placeholder=""
@@ -145,13 +149,13 @@ const AddOldOrder = () => {
                         onChange={handleChange}
                     />
                 </div>
-                <div class="form-group col-md-4">
-                    <label for="name">
-                        Invoice No<font style="color:red">*</font>
+                <div className="form-group col-md-4">
+                    <label htmlFor="name">
+                        Invoice No<font >*</font>
                     </label>
                     <input
                         type="text"
-                        class="form-control"
+                        className="form-control"
                         id=""
                         value={state.invoiceId}
                         placeholder=""
@@ -159,37 +163,37 @@ const AddOldOrder = () => {
                         onChange={handleChange}
                     />
                 </div>
-                <div class="form-group col-md-4">
-                    <label for="group_id">Payment Method</label>
-                    <select class="form-control" id="cat_id" name="method_id">
+                <div className="form-group col-md-4">
+                    <label htmlFor="group_id">Payment Method</label>
+                    <select className="form-control" id="" name="method_id" onChange={handleChange}>
                         <option value="">--Select Method --</option>
                         {method.map((method) => (
                             <option key={method.id} value={method.id}>
-                                {method.name}
+                                {method.method_name}
                             </option>
                         ))}
                     </select>
                 </div>
-                <div class="form-group col-md-4">
-                    <label for="dob">
-                        Date<font style="color:red">*</font>
+                <div className="form-group col-md-4">
+                    <label htmlFor="dob">
+                        Date<font >*</font>
                     </label>
                     <input
                         type="date"
-                        class="form-control singledatepicker"
+                        className="form-control singledatepicker"
                         id="dob"
                         name="dob"
-                        autocomplete="off"
+                        autoComplete="off"
                         onChange={handleChange}
                     />
                 </div>
-                <div class="form-group col-md-4">
-                    <label for="name">
-                        Contact<font style="color:red">*</font>
+                <div className="form-group col-md-4">
+                    <label htmlFor="name">
+                        Contact<font >*</font>
                     </label>
                     <input
                         type="text"
-                        class="form-control"
+                        className="form-control"
                         id=""
                         placeholder=""
                         name="contact"
@@ -197,13 +201,13 @@ const AddOldOrder = () => {
                         onChange={handleChange}
                     />
                 </div>
-                <div class="form-group col-md-4">
-                    <label for="name">
-                        Address<font style="color:red">*</font>
+                <div className="form-group col-md-4">
+                    <label htmlFor="name">
+                        Address<font >*</font>
                     </label>
                     <input
                         type="text"
-                        class="form-control"
+                        className="form-control"
                         id=""
                         placeholder=""
                         name="address"
@@ -212,14 +216,14 @@ const AddOldOrder = () => {
                     />
                 </div>
             </div>
-            <div class="form-row">
-                <div class="form-group col-md-4">
-                    <label for="name">
-                        Brand<font style="color:red">*</font>
+            <div className="form-row">
+                <div className="form-group col-md-4">
+                    <label htmlFor="name">
+                        Brand<font >*</font>
                     </label>
                     <input
                         type="text"
-                        class="form-control"
+                        className="form-control"
                         id=""
                         placeholder=""
                         name="brand"
@@ -227,13 +231,13 @@ const AddOldOrder = () => {
                         onChange={handleChange}
                     />
                 </div>
-                <div class="form-group col-md-4">
-                    <label for="name">
-                        Model<font style="color:red">*</font>
+                <div className="form-group col-md-4">
+                    <label htmlFor="name">
+                        Model<font >*</font>
                     </label>
                     <input
                         type="text"
-                        class="form-control"
+                        className="form-control"
                         id=""
                         placeholder=""
                         name="bike_name"
@@ -241,13 +245,13 @@ const AddOldOrder = () => {
                         onChange={handleChange}
                     />
                 </div>
-                <div class="form-group col-md-4">
-                    <label for="name">
-                        Quantity<font style="color:red">*</font>
+                <div className="form-group col-md-4">
+                    <label htmlFor="name">
+                        Quantity<font >*</font>
                     </label>
                     <input
                         type="number"
-                        class="form-control"
+                        className="form-control"
                         id=""
                         placeholder=""
                         name="bsquantity"
@@ -255,13 +259,13 @@ const AddOldOrder = () => {
                         onChange={handleChange}
                     />
                 </div>
-                <div class="form-group col-md-4">
-                    <label for="name">
-                        Engine No<font style="color:red">*</font>
+                <div className="form-group col-md-4">
+                    <label htmlFor="name">
+                        Engine No<font >*</font>
                     </label>
                     <input
                         type="text"
-                        class="form-control"
+                        className="form-control"
                         id=""
                         placeholder=""
                         name="engine_no"
@@ -269,13 +273,13 @@ const AddOldOrder = () => {
                         onChange={handleChange}
                     />
                 </div>
-                <div class="form-group col-md-4">
-                    <label for="name">
-                        Chassis No<font style="color:red">*</font>
+                <div className="form-group col-md-4">
+                    <label htmlFor="name">
+                        Chassis No<font >*</font>
                     </label>
                     <input
                         type="text"
-                        class="form-control"
+                        className="form-control"
                         id=""
                         placeholder=""
                         name="chas_no"
@@ -283,13 +287,13 @@ const AddOldOrder = () => {
                         onChange={handleChange}
                     />
                 </div>
-                <div class="form-group col-md-4">
-                    <label for="name">
-                        Model of Vehicle<font style="color:red">*</font>
+                <div className="form-group col-md-4">
+                    <label htmlFor="name">
+                        Model of Vehicle<font >*</font>
                     </label>
                     <input
                         type="text"
-                        class="form-control"
+                        className="form-control"
                         id=""
                         placeholder=""
                         name="veh_no"
@@ -297,13 +301,13 @@ const AddOldOrder = () => {
                         onChange={handleChange}
                     />
                 </div>
-                <div class="form-group col-md-4">
-                    <label for="name">
-                        Make of Vehicle<font style="color:red">*</font>
+                <div className="form-group col-md-4">
+                    <label htmlFor="name">
+                        Make of Vehicle<font >*</font>
                     </label>
                     <input
                         type="text"
-                        class="form-control"
+                        className="form-control"
                         id=""
                         placeholder=""
                         name="m_veh"
@@ -311,13 +315,13 @@ const AddOldOrder = () => {
                         onChange={handleChange}
                     />
                 </div>
-                <div class="form-group col-md-4">
-                    <label for="name">
-                        Year of manufacture<font style="color:red">*</font>
+                <div className="form-group col-md-4">
+                    <label htmlFor="name">
+                        Year of manufacture<font >*</font>
                     </label>
                     <input
                         type="text"
-                        class="form-control"
+                        className="form-control"
                         id=""
                         placeholder=""
                         name="manu"
@@ -325,13 +329,13 @@ const AddOldOrder = () => {
                         onChange={handleChange}
                     />
                 </div>
-                <div class="form-group col-md-4">
-                    <label for="name">
-                        No of Cylinder with CC<font style="color:red">*</font>
+                <div className="form-group col-md-4">
+                    <label htmlFor="name">
+                        No of Cylinder with CC<font >*</font>
                     </label>
                     <input
                         type="text"
-                        class="form-control"
+                        className="form-control"
                         id=""
                         placeholder=""
                         name="cc"
@@ -339,13 +343,13 @@ const AddOldOrder = () => {
                         onChange={handleChange}
                     />
                 </div>
-                <div class="form-group col-md-4">
-                    <label for="name">
-                        Seating Capacity<font style="color:red">*</font>
+                <div className="form-group col-md-4">
+                    <label htmlFor="name">
+                        Seating Capacity<font >*</font>
                     </label>
                     <input
                         type="text"
-                        class="form-control"
+                        className="form-control"
                         id=""
                         placeholder=""
                         name="seat_cap"
@@ -353,13 +357,13 @@ const AddOldOrder = () => {
                         onChange={handleChange}
                     />
                 </div>
-                <div class="form-group col-md-4">
-                    <label for="name">
-                        Brake<font style="color:red">*</font>
+                <div className="form-group col-md-4">
+                    <label htmlFor="name">
+                        Brake<font >*</font>
                     </label>
                     <input
                         type="text"
-                        class="form-control"
+                        className="form-control"
                         id=""
                         placeholder=""
                         name="brake"
@@ -367,13 +371,13 @@ const AddOldOrder = () => {
                         onChange={handleChange}
                     />
                 </div>
-                <div class="form-group col-md-4">
-                    <label for="name">
-                        Fornt Tyre Size<font style="color:red">*</font>
+                <div className="form-group col-md-4">
+                    <label htmlFor="name">
+                        Fornt Tyre Size<font >*</font>
                     </label>
                     <input
                         type="text"
-                        class="form-control"
+                        className="form-control"
                         id=""
                         placeholder=""
                         name="ftyre"
@@ -381,13 +385,13 @@ const AddOldOrder = () => {
                         onChange={handleChange}
                     />
                 </div>
-                <div class="form-group col-md-4">
-                    <label for="name">
-                        Rear Tyre Size<font style="color:red">*</font>
+                <div className="form-group col-md-4">
+                    <label htmlFor="name">
+                        Rear Tyre Size<font >*</font>
                     </label>
                     <input
                         type="text"
-                        class="form-control"
+                        className="form-control"
                         id=""
                         placeholder=""
                         name="rtyre"
@@ -395,13 +399,13 @@ const AddOldOrder = () => {
                         onChange={handleChange}
                     />
                 </div>
-                <div class="form-group col-md-4">
-                    <label for="name">
-                        Weight<font style="color:red">*</font>
+                <div className="form-group col-md-4">
+                    <label htmlFor="name">
+                        Weight<font >*</font>
                     </label>
                     <input
                         type="text"
-                        class="form-control"
+                        className="form-control"
                         id=""
                         placeholder=""
                         name="weight"
@@ -409,13 +413,13 @@ const AddOldOrder = () => {
                         onChange={handleChange}
                     />
                 </div>
-                <div class="form-group col-md-4">
-                    <label for="name">
-                        Color<font style="color:red">*</font>
+                <div className="form-group col-md-4">
+                    <label htmlFor="name">
+                        Color<font >*</font>
                     </label>
                     <input
                         type="text"
-                        class="form-control"
+                        className="form-control"
                         id=""
                         placeholder=""
                         name="color"
@@ -423,13 +427,13 @@ const AddOldOrder = () => {
                         onChange={handleChange}
                     />
                 </div>
-                <div class="form-group col-md-4">
-                    <label for="name">
-                        Cost<font style="color:red">*</font>
+                <div className="form-group col-md-4">
+                    <label htmlFor="name">
+                        Cost<font >*</font>
                     </label>
                     <input
                         type="text"
-                        class="form-control"
+                        className="form-control"
                         id=""
                         placeholder=""
                         name="bcost"
@@ -437,13 +441,13 @@ const AddOldOrder = () => {
                         onChange={handleChange}
                     />
                 </div>
-                <div class="form-group col-md-4">
-                    <label for="name">
-                        Sale Price<font style="color:red">*</font>
+                <div className="form-group col-md-4">
+                    <label htmlFor="name">
+                        Sale Price<font >*</font>
                     </label>
                     <input
                         type="text"
-                        class="form-control"
+                        className="form-control"
                         id=""
                         placeholder=""
                         name="sale_price"
@@ -451,13 +455,13 @@ const AddOldOrder = () => {
                         onChange={handleChange}
                     />
                 </div>
-                <div class="form-group col-md-4">
-                    <label for="name">
-                        Registration Fee<font style="color:red">*</font>
+                <div className="form-group col-md-4">
+                    <label htmlFor="name">
+                        Registration Fee<font >*</font>
                     </label>
                     <input
                         type="text"
-                        class="form-control"
+                        className="form-control"
                         id=""
                         placeholder=""
                         name="registration"
@@ -465,13 +469,13 @@ const AddOldOrder = () => {
                         onChange={handleChange}
                     />
                 </div>
-                <div class="form-group col-md-4">
-                    <label for="name">
-                        Bank Draft<font style="color:red">*</font>
+                <div className="form-group col-md-4">
+                    <label htmlFor="name">
+                        Bank Draft<font >*</font>
                     </label>
                     <input
                         type="text"
-                        class="form-control"
+                        className="form-control"
                         id=""
                         placeholder=""
                         name="bank_draft"
@@ -479,13 +483,13 @@ const AddOldOrder = () => {
                         onChange={handleChange}
                     />
                 </div>
-                <div class="form-group col-md-4">
-                    <label for="name">
-                        BRTA<font style="color:red">*</font>
+                <div className="form-group col-md-4">
+                    <label htmlFor="name">
+                        BRTA<font >*</font>
                     </label>
                     <input
                         type="text"
-                        class="form-control"
+                        className="form-control"
                         id=""
                         placeholder=""
                         name="brta"
@@ -493,50 +497,50 @@ const AddOldOrder = () => {
                         onChange={handleChange}
                     />
                 </div>
-                <div class="form-group col-md-4">
-                    <label for="image">Customer Photo</label>
+                <div className="form-group col-md-4">
+                    <label htmlFor="image">Customer Photo</label>
                     <input
                         type="file"
-                        class="form-control"
+                        className="form-control"
                         id="image"
                         name="cus_photo"
                         onChange={handleChange}
                     />
                 </div>
-                <div class="form-group col-md-4">
-                    <label for="image">Bank Copy</label>
+                <div className="form-group col-md-4">
+                    <label htmlFor="image">Bank Copy</label>
                     <input
                         type="file"
-                        class="form-control"
+                        className="form-control"
                         id="image"
                         name="b_copy"
                         onChange={handleChange}
                     />
                 </div>
-                <div class="form-group col-md-4">
-                    <label for="image">Registration Slip</label>
+                <div className="form-group col-md-4">
+                    <label htmlFor="image">Registration Slip</label>
                     <input
                         type="file"
-                        class="form-control"
+                        className="form-control"
                         id="image"
                         name="r_slip"
                         onChange={handleChange}
                     />
                 </div>
-                <div class="form-group col-md-4">
-                    <label for="image">Tax Token</label>
+                <div className="form-group col-md-4">
+                    <label htmlFor="image">Tax Token</label>
                     <input
                         type="file"
-                        class="form-control"
+                        className="form-control"
                         id="image"
                         name="t_token"
                         onChange={handleChange}
                     />
                 </div>
-                <div class="form-group col-md-12">
+                <div className="form-group col-md-12">
                     <button
                         type="submit"
-                        class="btn btn-primary btn-sm"
+                        className="btn btn-primary btn-sm"
                         name="pro_btn"
                     >
                         Save

@@ -8,48 +8,54 @@ use Illuminate\Http\Request;
 class BikeServiceController extends Controller
 {
 
+    public function serviceData($data)
+    {
+        if ($data == 'first') {
+            $bikeservice = BikeService::pluck('');
+        }
+        $bikeservice = BikeService::all();
+        return $this->sendResponse(['data' => $bikeservice]);
+    }
     public function index()
     {
-        $bikeservice = BikeService::all();
-        return view('service.first_service',compact('bikeservice')); 
+        $bikeservice = BikeService::where('service_type', 'first')->get();
+        return view('service.first_service', compact('bikeservice'));
     }
     public function second()
     {
-        $bikeservice = BikeService::all();
-        return view('service.second_service',compact('bikeservice')); 
+        $bikeservice = BikeService::where('service_type', 'second')->get();
+        return view('service.second_service', compact('bikeservice'));
     }
     public function third()
     {
-        $bikeservice = BikeService::all();
-        return view('service.third_service',compact('bikeservice'));  
+        $bikeservice = BikeService::where('service_type', 'third')->get();
+        return view('service.third_service', compact('bikeservice'));
     }
     public function fourth()
     {
-        $bikeservice = BikeService::all();
-        return view('service.fourth_service',compact('bikeservice'));  
+        $bikeservice = BikeService::where('service_type', 'fourth')->get();
+        return view('service.fourth_service', compact('bikeservice'));
     }
     public function fifth()
     {
-        $bikeservice = BikeService::all();
-        return view('service.fifth_service',compact('bikeservice'));  
+        $bikeservice = BikeService::where('service_type', 'fifth')->get();
+        return view('service.fifth_service', compact('bikeservice'));
     }
     public function sixth()
     {
-        $bikeservice = BikeService::all();
-        return view('service.sixth_service',compact('bikeservice')); 
+        $bikeservice = BikeService::where('service_type', 'sixth')->get();
+        return view('service.sixth_service', compact('bikeservice'));
     }
     public function seventh()
     {
-        $bikeservice = BikeService::all();
-        return view('service.seventh_service',compact('bikeservice'));  
+        $bikeservice = BikeService::where('service_type', 'seventh')->get();
+        return view('service.seventh_service', compact('bikeservice'));
     }
     public function eighth()
     {
-        $bikeservice = BikeService::all();
-        return view('service.eighth_service',compact('bikeservice')); 
+        $bikeservice = BikeService::where('service_type', 'eighth')->get();
+        return view('service.eighth_service', compact('bikeservice'));
     }
-
-
 
     public function create()
     {

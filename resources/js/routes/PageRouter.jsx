@@ -17,6 +17,7 @@ import AddOrder from "../pages/bikes/AddOrder";
 import AddOldOrder from "../pages/bikes/AddOldOrder";
 import BikeSaleList from "../pages/bikes/BikeSaleList";
 import BikeStockList from "../pages/bikes/BikeStockList";
+import Service from "../pages/service/Service";
 
 
 const router = createBrowserRouter([
@@ -53,6 +54,8 @@ const router = createBrowserRouter([
         { path: "/bike-sale/old", element: <AddOldOrder/>, },
         { path: "/bike-sale", element: <BikeSaleList/>, },
         { path: "/bike/stock", element: <BikeStockList/>, },
+
+        { path: "/service", element: <Service/>, },
 
         { path: "/categories", element: <Category/>, },
         { path: "/categories/add", element: <CategoryForm/>, },

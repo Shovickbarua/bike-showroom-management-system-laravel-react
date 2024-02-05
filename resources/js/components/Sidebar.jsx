@@ -116,7 +116,7 @@ const Sidebar = () => {
                                         </Link>
                                     </li>
                                     <li className="nav-item">
-                                        <Link to="" className="nav-link">
+                                        <Link to="/bike-sale/old" className="nav-link">
                                             <i className="far fa-circle nav-icon"></i>
                                             <p>Add Old Sale</p>
                                         </Link>
@@ -177,13 +177,13 @@ const Sidebar = () => {
                                         </Link>
                                     </li>
                                     <li className="nav-item">
-                                        <Link to="" className="nav-link">
+                                        <Link to="bike-sale" className="nav-link">
                                             <i className="far fa-circle nav-icon"></i>
                                             <p>Bike Sale List</p>
                                         </Link>
                                     </li>
                                     <li className="nav-item">
-                                        <Link to="" className="nav-link">
+                                        <Link to="/bike-sale/old" className="nav-link">
                                             <i className="far fa-circle nav-icon"></i>
                                             <p>Add Old Bike Sale</p>
                                         </Link>
@@ -200,37 +200,9 @@ const Sidebar = () => {
                                 </Link>
                                 <ul className="nav nav-treeview">
                                     <li className="nav-item">
-                                        <Link to="" className="nav-link">
+                                        <Link to="/service" className="nav-link">
                                             <i className="far fa-circle nav-icon"></i>
-                                            <p>First Service List</p>
-                                        </Link>
-                                        <Link to="" className="nav-link">
-                                            <i className="far fa-circle nav-icon"></i>
-                                            <p>Second Service List</p>
-                                        </Link>
-                                        <Link to="" className="nav-link">
-                                            <i className="far fa-circle nav-icon"></i>
-                                            <p>Third Service List</p>
-                                        </Link>
-                                        <Link to="" className="nav-link">
-                                            <i className="far fa-circle nav-icon"></i>
-                                            <p>Fouth Service List</p>
-                                        </Link>
-                                        <Link to="" className="nav-link">
-                                            <i className="far fa-circle nav-icon"></i>
-                                            <p>Fifth Service List</p>
-                                        </Link>
-                                        <Link to="" className="nav-link">
-                                            <i className="far fa-circle nav-icon"></i>
-                                            <p>Sixth Service List</p>
-                                        </Link>
-                                        <Link to="" className="nav-link">
-                                            <i className="far fa-circle nav-icon"></i>
-                                            <p>Seventh Service List</p>
-                                        </Link>
-                                        <Link to="" className="nav-link">
-                                            <i className="far fa-circle nav-icon"></i>
-                                            <p>Eighth Service List</p>
+                                            <p>Service List</p>
                                         </Link>
                                     </li>
                                 </ul>
