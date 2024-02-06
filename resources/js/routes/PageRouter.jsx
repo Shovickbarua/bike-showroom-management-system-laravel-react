@@ -18,15 +18,17 @@ import AddOldOrder from "../pages/bikes/AddOldOrder";
 import BikeSaleList from "../pages/bikes/BikeSaleList";
 import BikeStockList from "../pages/bikes/BikeStockList";
 import Service from "../pages/service/Service";
-
+import Login from "../pages/auth/login";
+import AuthProvider from "../context/AuthContext";
 
 const router = createBrowserRouter([
+  { path: "/", element: <Login/>, },
   {
     path: "/",
     element: <Root/>,
     children:[
         {
-          path: "/",
+          path: "/dashboard",
           element: <Dashboard/>,
         },
 
@@ -66,7 +68,9 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("app")).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   </React.StrictMode>
 );
 
