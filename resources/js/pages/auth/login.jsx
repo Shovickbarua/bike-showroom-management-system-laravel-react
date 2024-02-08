@@ -1,14 +1,12 @@
 import React, { useContext, useState } from "react";
 import AuthServices from "../../services/AuthServices";
 import { useNavigate } from "react-router-dom";
-import  AuthContext  from "../../context/AuthContext";
-import useAuth from "../../context/AuthContext";
+import  UserContext  from "../../context/UserContext";
 
 const Login = () => {
     const [login, setLogin] = useState('')
     const navigate = useNavigate();
-    const {setCurrentUser} = useContext(AuthContext);
-    // const {setCurrentUser} = useAuth();
+    const {setUser} = useContext(UserContext);
     const handleChange = (e) => {
         const { name, value } = e.target;
         setLogin({
@@ -21,9 +19,9 @@ const Login = () => {
         e.preventDefault();
         const res = await AuthServices.auth(login);
         console.log('data', res)
-        // if (res.success) {
-        //     navigate("/dashboard");
-        // }
+        if (res.success) {
+            navigate("/dashboard");
+        }
     };
 
     return (
