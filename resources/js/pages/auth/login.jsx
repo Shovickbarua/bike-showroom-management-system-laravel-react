@@ -1,12 +1,13 @@
 import React, { useContext, useState } from "react";
 import AuthServices from "../../services/AuthServices";
 import { useNavigate } from "react-router-dom";
-import  UserContext  from "../../context/UserContext";
+import { UserContext, useAuth } from "../../context/UserContext";
+
 
 const Login = () => {
     const [login, setLogin] = useState('')
     const navigate = useNavigate();
-    const {setUser} = useContext(UserContext);
+    const {setUser} = useAuth();
     const handleChange = (e) => {
         const { name, value } = e.target;
         setLogin({

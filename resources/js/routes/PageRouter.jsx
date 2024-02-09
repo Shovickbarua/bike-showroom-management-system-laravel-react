@@ -19,7 +19,7 @@ import BikeSaleList from "../pages/bikes/BikeSaleList";
 import BikeStockList from "../pages/bikes/BikeStockList";
 import Service from "../pages/service/Service";
 import Login from "../pages/auth/login";
-import UserProvider from "../context/UserProvider";
+import UserProvider from "../context/UserContext";
 
 const router = createBrowserRouter([
     { path: "/", element: <Login /> },
