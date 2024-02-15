@@ -21,6 +21,7 @@ const Login = () => {
         const res = await AuthServices.auth(login);
         console.log('data', res)
         if (res.success) {
+            setUser(res.data.data);
             navigate("/dashboard");
         }
     };
