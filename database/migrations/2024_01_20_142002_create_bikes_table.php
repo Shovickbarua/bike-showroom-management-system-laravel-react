@@ -9,41 +9,37 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
-        Schema::create('bike_services', function (Blueprint $table) {
+        Schema::create('bikes', function (Blueprint $table) {
             $table->id();
-            $table->string("invoiceId");
-            $table->string("client_name");
-            $table->string("contact");
-            $table->string("address");
+            $table->string("brand");
             $table->string("bike_name");
-            $table->string("bsquantity");
-            $table->string("service_type");
-            $table->date("first_service");
-            $table->date("second_service");
-            $table->date("third_service");
-            $table->date("fourth_service");
-            $table->date("fifth_service");
-            $table->date("sixth_service");
-            $table->date("seventh_service");
-            $table->date("eighth_service");
-            $table->date("f_date");
-            $table->date("s_date");
-            $table->date("t_date");
-            $table->date("four_date");
-            $table->date("fifth_date");
-            $table->date("six_date");
-            $table->date("seven_date");
-            $table->date("eighth_date");
+            $table->string("bquantity");
+            $table->date("dob");
+            $table->string("bcost");
+            $table->string("color");
+            $table->string("engine_no");
+            $table->string("chas_no");
+            $table->string("m_veh");
+            $table->string("manu");
+            $table->string("cc");
+            $table->string("seat_cap");
+            $table->string("brake");
+            $table->string("ftyre");
+            $table->string("rtyre");
+            $table->string("weight");
+            $table->string("image");
             $table->timestamps();
         });
     }
 
     /**
      * Reverse the migrations.
+     *
+     * @return void
      */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('bikes');
     }
