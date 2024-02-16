@@ -8,11 +8,11 @@ import { useAuth } from '../context/UserContext';
 function Root() {
   const {user} = useAuth();
   const navigate = useNavigate();
-  useEffect(() => {
-    if(!user){
-      navigate('/');
-    }
-  }, [])
+  // useEffect(() => {
+  //   if(!user){
+  //     navigate('/');
+  //   }
+  // }, [])
   
   return (
     <div>
